@@ -1,8 +1,10 @@
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.LinkedList;
 
 public class Practice {
 
@@ -159,6 +161,24 @@ public class Practice {
    * @return whether there exists a valid positive path from starting to ending
    */
   public static boolean positivePathExists(Map<Integer, Set<Integer>> graph, int starting, int ending) {
+    if (starting < 0 || ending < 0 || !graph.containsKey(starting) || !graph.containsKey(ending)) return false;
+    Set<Integer> visited = new HashSet<>();
+    Queue<Integer> queue = new LinkedList<>();
+
+    queue.add(starting);
+
+    while (!queue.isEmpty()) {
+      int key = queue.remove();
+      if (visited.contains(key)) continue;
+      visited.add(key);
+
+      if (key == ending) return true;
+      
+      for (int value : graph.get(key)) {
+        if (value > 0) queue.add(value);
+      }
+    }
+
     return false;
   }
 
