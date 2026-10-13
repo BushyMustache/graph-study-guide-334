@@ -192,6 +192,24 @@ public class Practice {
    * @return true if a person in the extended network works at the specified company, false otherwise
    */
   public static boolean hasExtendedConnectionAtCompany(Professional person, String companyName) {
+    if (person == null) return false;
+    Set<Professional> visited = new HashSet<>();
+    Queue<Professional> queue = new LinkedList<>();
+
+    queue.add(person);
+
+    while (!queue.isEmpty()) {
+      Professional pro = queue.remove();
+      if (visited.contains(pro)) continue;
+      visited.add(pro);
+
+      if (pro.getCompany() == companyName) return true;
+
+      for (Professional connect : pro.getConnections()) {
+        queue.add(connect);
+      }
+    }
+    
     return false;
   }
 
