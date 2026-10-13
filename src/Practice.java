@@ -126,7 +126,24 @@ public class Practice {
    * @return true if there is a two-way connection between v1 and v2, false otherwise
    */
   public static <T> boolean twoWay(Vertex<T> v1, Vertex<T> v2) {
-    return false;
+    if (v1 == null || v2 == null) return false;
+    if (v1 == v2 || (v1.neighbors.contains(v2) && v2.neighbors.contains(v1))) return true;
+    Set<Vertex<T>> visited1 = new HashSet<>();
+    Set<Vertex<T>> visited2 = new HashSet<>();
+
+    oneWay(v1, visited1);
+    oneWay(v2, visited2);
+
+    return visited1.contains(v2) && visited2.contains(v1);
+  }
+
+  private static <T> void oneWay(Vertex<T> v, Set<Vertex<T>> visited) {
+    if (visited.contains(v)) return;
+    visited.add(v);
+
+    for (Vertex<T> neighbor : v.neighbors) {
+      oneWay(neighbor, visited);
+    }
   }
 
   /**
