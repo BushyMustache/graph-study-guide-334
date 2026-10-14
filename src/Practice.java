@@ -281,6 +281,23 @@ public class Practice {
    * @return an unsorted list of next moves
    */
   public static List<int[]> nextMoves(char[][] board, int[] current, int[][] directions) {
-    return null;
+    List<int[]> moves = new ArrayList<>();
+
+    int row = current[0];
+    int column = current[1];
+
+    for (int [] direction : directions) {
+      int newRow = row + direction[0];
+      int newColumn = column + direction[1];
+
+      if (newRow >= 0 && newRow < board.length &&
+      newColumn >= 0 && newColumn < board[0].length) {
+        if (board[newRow][newColumn] != 'X') {
+          moves.add(new int[] {newRow, newColumn});
+        }
+      }
+    }
+
+    return moves;
   }
 }
